@@ -38,6 +38,20 @@ public class TaskController {
         service.deleteTask(taskId);
         return ResponseEntity.ok().build();
 
+    @GetMapping(value = "{taskId}")
+    public TaskDto getTask(@PathVariable Long taskId) {
+        return taskMapper.mapToTaskDto(service.getTaskById(taskId));
+    }
+
+    @GetMapping
+    public List<TaskDto> getTask() {
+        List<Task> tasks = service.getAllTasks();
+        return taskMapper.mapToTaskDtoList(tasks);
+    }
+
+    @DeleteMapping
+    public void deleteTask(@PathVariable Long taskId) {
+
     }
 
     @PutMapping
@@ -53,6 +67,14 @@ public class TaskController {
         Task task = taskMapper.mapToTask(taskDto);
         service.saveTask(task);
         return ResponseEntity.ok().build();
+
+    public TaskDto updateTask(TaskDto taskDto) {
+        return new TaskDto(1L, "Updated task", "Updated task content");
+    }
+
+    @PostMapping
+    public void createTask(TaskDto taskDto) {
+
     }
 
 }
