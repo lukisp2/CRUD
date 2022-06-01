@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service
 public class TaskMapper {
 
@@ -17,6 +18,7 @@ public class TaskMapper {
                 taskDto.getContent()
         );
     }
+
     public TaskDto mapToTaskDto(final Task task) {
         return new TaskDto(
                 task.getId(),
@@ -26,6 +28,10 @@ public class TaskMapper {
     }
 
     public List<TaskDto> mapToTaskDtoList(final List<Task> taskList) {
-        return taskList.stream().map(this::mapToTaskDto).collect(Collectors.toList());
+
+        return taskList.stream()
+                .map(this::mapToTaskDto)
+                .collect(Collectors.toList());
     }
+
 }

@@ -5,14 +5,12 @@ import com.crud.task.domain.TaskDto;
 import com.crud.task.mapper.TaskMapper;
 import com.crud.task.service.DbService;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.threads.TaskThread;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/v1/tasks")
 @RequiredArgsConstructor
@@ -27,21 +25,12 @@ public class TaskController {
     }
 
 
-    @GetMapping
-    public ResponseEntity<List<TaskDto>> getTask() {
-        List<Task> tasks = service.getAllTasks();
-        return ResponseEntity.ok(taskMapper.mapToTaskDtoList(tasks));
-    }
-
     @DeleteMapping(value = "{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
         service.deleteTask(taskId);
         return ResponseEntity.ok().build();
-
-    @GetMapping(value = "{taskId}")
-    public TaskDto getTask(@PathVariable Long taskId) {
-        return taskMapper.mapToTaskDto(service.getTaskById(taskId));
     }
+
 
     @GetMapping
     public List<TaskDto> getTask() {
@@ -49,10 +38,6 @@ public class TaskController {
         return taskMapper.mapToTaskDtoList(tasks);
     }
 
-    @DeleteMapping
-    public void deleteTask(@PathVariable Long taskId) {
-
-    }
 
     @PutMapping
     public ResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto) {
@@ -67,14 +52,5 @@ public class TaskController {
         Task task = taskMapper.mapToTask(taskDto);
         service.saveTask(task);
         return ResponseEntity.ok().build();
-
-    public TaskDto updateTask(TaskDto taskDto) {
-        return new TaskDto(1L, "Updated task", "Updated task content");
     }
-
-    @PostMapping
-    public void createTask(TaskDto taskDto) {
-
-    }
-
 }
