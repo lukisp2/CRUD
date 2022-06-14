@@ -17,16 +17,12 @@ public class EmailScheduler {
     private final SimpleEmailService simpleEmailService;
     private final TaskRepository taskRepository;
     private final AdminConfig adminConfig;
-
-    @Scheduled(cron = "0 0 10 * * *")
+@Scheduled(fixedDelay = 10000)
+@Scheduled(cron = "0 0 10 * * *")
     public void sendInformationEmail() {
         long size = taskRepository.count();
-        String message ="";
-        if (size == 1) {
-            message = "Currently in database you got: " + size + " task";
-        } else {
-            message = "Currently in database you got: " + size + " tasks";
-        }
+        String message ="Currently in database you got: " + size + (size == 1 ? " task" : " tasks");
+        System.out.println(message);
         simpleEmailService.send(
                 new Mail(
                         adminConfig.getAdminMail(),
