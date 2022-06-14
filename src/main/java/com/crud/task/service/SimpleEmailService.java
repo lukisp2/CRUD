@@ -33,11 +33,6 @@ public class SimpleEmailService {
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
 
-        if (mail.getToCc().isPresent()) {
-            mailMessage.setCc(mail.getToCc().get());
-            log.info("Email CC is: " + mail.getToCc().get());
-        }
-
         return mailMessage;
     }
 }
