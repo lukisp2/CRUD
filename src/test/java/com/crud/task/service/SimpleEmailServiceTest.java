@@ -31,7 +31,7 @@ class SimpleEmailServiceTest {
                 .mailTo("test@test.com")
                 .message("Test message")
                 .subject("Subject Test")
-                .toCc(Optional.empty())
+//                .toCc(Optional.empty())
                 .build();
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
@@ -40,7 +40,7 @@ class SimpleEmailServiceTest {
         //When
         simpleEmailService.send(mail);
         //Then
-        Assertions.assertEquals(Optional.empty(),mail.getToCc());
+      //  Assertions.assertEquals(Optional.empty(),mail.getToCc());
         verify(javaMailSender,times(1)).send(mailMessage);
 
     }
