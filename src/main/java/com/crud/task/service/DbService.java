@@ -19,7 +19,6 @@ public class DbService {
         return repository.findAll();
     }
 
-
     public Task saveTask(final Task task) {
         return repository.save(task);
     }
@@ -31,7 +30,7 @@ public class DbService {
 
     public Task getTaskById(Long id) {
         Optional<Task> taskOptional = repository.findById(id);
-        Task task = taskOptional.orElse(new Task(999L, "defoult", "default"));
+        Task task = taskOptional.orElse(new Task(999L, "default", "default"));
         return task;
     }
 

@@ -24,13 +24,11 @@ public class TaskController {
         return ResponseEntity.ok(taskMapper.mapToTaskDto(service.getTaskById(taskId)));
     }
 
-
     @DeleteMapping(value = "{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
         service.deleteTask(taskId);
         return ResponseEntity.ok().build();
     }
-
 
     @GetMapping
     public List<TaskDto> getTask() {
@@ -38,13 +36,11 @@ public class TaskController {
         return taskMapper.mapToTaskDtoList(tasks);
     }
 
-
     @PutMapping
     public ResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto) {
         Task task = taskMapper.mapToTask(taskDto);
         Task savedTask = service.saveTask(task);
         return ResponseEntity.ok(taskMapper.mapToTaskDto(savedTask));
-
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
