@@ -28,12 +28,10 @@ public class MailCreatorService {
 
 
     public String buildTrelloCardEmail(String message) {
-
         List<String> functionality = new ArrayList<>();
         functionality.add("You can manage your tasks");
         functionality.add("Provides connection with Trello Account");
         functionality.add("Application allows sending tasks to Trello");
-
 
         context.setVariable("message", message);
         context.setVariable("task_url", "https://lukisp2.github.io");
@@ -46,6 +44,18 @@ public class MailCreatorService {
         return templateEngine.process("mail/created-trello-card-mail", context);
     }
 
+    public String buildDbInfoEmail(String message) {
+
+        context.setVariable("message", message);
+        context.setVariable("tasks_url", "https://lukisp2.github.io");
+        context.setVariable("welcome_message", "Hey " + adminConfig.getAdminName());
+        context.setVariable("goodbye_message", "See you soon!  " + adminConfig.getAdminName());
+        context.setVariable("button", "Visit our web");
+        context.setVariable("admin_name", adminConfig.getAdminName());
+        context.setVariable("show_button", true);
+        context.setVariable("admin_config", adminConfig);
+        return templateEngine.process("mail/mail-DbInfo", context);
+    }
 
 
 

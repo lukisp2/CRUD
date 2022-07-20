@@ -40,19 +40,6 @@ public class EmailScheduler {
     }
 
 
-    @Scheduled(cron = "30 * * * * *")
-    public void sendDbInformationMail() {
-        Context context = new Context();
-        long size = taskRepository.count();
-        String message = "You have " + size + " tasks in your database!";
-        context.setVariable("message", message);
-        context.setVariable("task_url", "https://lukisp2.github.io");
-        context.setVariable("button", "Visit website");
-        context.setVariable("admin_name", adminConfig.getAdminName());
-        context.setVariable("show_button", false);
-        context.setVariable("is_friend", true);
-        context.setVariable("admin_config", adminConfig);
-        templateEngine.process("mail/database-mail", context);
-    }
+
 
 }

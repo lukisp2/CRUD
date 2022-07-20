@@ -42,6 +42,15 @@ public class SimpleEmailService {
         }
     }
 
+    @Scheduled(fixedDelay = 10000)
+    public void sendScheduledMail() {
+        try {
+            javaMailSender.send(createMimeMessageDb());
+            log.info("Scheduled email has been send...");
+        } catch (MailException e) {
+            log.error("Failed to send scheduled mail " + e.getMessage(), e);
+        }
+    }
 
 
     private MimeMessagePreparator createMimeMessage(final Mail mail) {
@@ -50,6 +59,17 @@ public class SimpleEmailService {
             mimeMessageHelper.setTo("lukaszmarchelelk@gmail.com");
             mimeMessageHelper.setSubject(mail.getSubject());
             mimeMessageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+        };
+    }
+
+    private MimeMessagePreparator createMimeMessageDb() {
+        int tasksDbNumber = taskRepository.findAll().size();
+        String message = "You have  " + tasksDbNumber + " tasks";
+        return mimeMessage -> {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+            mimeMessageHelper.setTo("lukaszmarchelelk@gmail.com");
+            mimeMessageHelper.setSubject("Db info mail");
+            mimeMessageHelper.setText(mailCreatorService.buildDbInfoEmail(message), true);
         };
     }
 
