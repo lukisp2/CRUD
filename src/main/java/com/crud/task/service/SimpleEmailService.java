@@ -42,7 +42,7 @@ public class SimpleEmailService {
         }
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(cron = "0 1 1 * * ?")
     public void sendScheduledMail() {
         try {
             javaMailSender.send(createMimeMessageDb());
